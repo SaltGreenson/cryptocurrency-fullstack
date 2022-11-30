@@ -13,12 +13,23 @@ export const assetsRouter = initializedTRPC.router({
             },
         })
         .input(z.object({
-            offset: z.string(),
-            limit: z.string().max(3, 'Limit cannot be more than 999'),
+            offset: z
+                .string()
+                .optional(),
+            limit: z
+                .string()
+                .max(3, 'Limit cannot be more than 999')
+                .optional(),
+            search: z
+                .string()
+                .optional()
+                .describe('search by asset id (bitcoin) or symbol (BTC)'),
+            ids: z
+                .string()
+                .optional()
+                .describe('query with multiple ids=bitcoin,ethereum,monero')
         }))
-        .output(
-            z.object(
-                {
+        .output(z.object({
                     data: z.array(
                         z.object({
                             id: z.string(),
@@ -40,7 +51,12 @@ export const assetsRouter = initializedTRPC.router({
             )
         )
         .query(async ({input}) => {
-            const response = await instance.get(`assets?offset=${input.offset}&limit=${input.limit}`);
+            const response = await instance.get(`assets` +
+                `?offset=${input.offset ?? ''}` +
+                `&limit=${input.limit ?? ''}` +
+                `&search=${input.search ?? ''}` +
+                `&ids=${input.ids ?? ''}`
+            );
             return response.data;
         }),
     assetById: publicProcedure
@@ -89,20 +105,31 @@ export const assetsRouter = initializedTRPC.router({
             },
         })
         .input(z.object({
-            id: z.string(),
-            interval:
-                z.enum(['m1', 'm5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1'])
+            id: z
+                .string(),
+            interval: z
+                .enum(['m1', 'm5', 'm15', 'm30', 'h1', 'h2', 'h6', 'h12', 'd1']),
+            startEnd: z
+                .string()
+                .optional()
+                .describe('UNIX time in milliseconds. ' +
+                    'omitting will return the most recent asset history. ' +
+                    'If start is supplied, end is required and vice versa')
         }))
         .output(z.object({
             data: z.array(
                 z.object({
-                    priceUsd: z.string(),
-                    time: z.number()
+                    priceUsd: z
+                        .string(),
+                    time: z
+                        .number()
                 })
             )
         }))
         .query(async ({input}) => {
-            const response = await instance.get(`assets/${input.id}/history?interval=${input.interval}`);
+            const response = await instance.get(`assets/${input.id}/history`+
+                `?interval=${input.interval}` +
+                `?startEnd=${input.startEnd ?? ''}`);
             return response.data;
         }),
     assetMarkets: publicProcedure
@@ -115,8 +142,15 @@ export const assetsRouter = initializedTRPC.router({
             },
         })
         .input(z.object({
-            id: z.string(),
-            limit: z.string()
+            id: z
+                .string()
+                .describe('asset id'),
+            limit: z
+                .string()
+                .optional(),
+            offset: z
+                .string()
+                .optional()
         }))
         .output(z.object({
             data: z.array(
@@ -133,7 +167,9 @@ export const assetsRouter = initializedTRPC.router({
             )
         }))
         .query(async ({input}) => {
-            const response = await instance.get(`assets/${input.id}/markets?limit=${input.limit}`);
+            const response = await instance.get(`assets/${input.id}/markets`+
+                `?limit=${input.limit ?? ''}` +
+                `&offset=${input.offset ?? ''}`);
             return response.data;
         })
 })

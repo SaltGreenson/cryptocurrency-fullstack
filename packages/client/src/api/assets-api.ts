@@ -19,15 +19,15 @@ export const assetsApi = {
     return response.data;
   },
   async assetsById(id: string): Promise<ResponseType> {
-    const response = await instance.get<ResponseType>(`assets/${id}`);
+    const response = await instance.get<ResponseType>(`asset-by-id?id=${id}`);
     return response.data;
   },
   async assetsHistoryById(id: string, interval: IntervalEnum): Promise<ResponseType> {
-    const response = await instance.get<ResponseType>(`assets/${id}/history?interval=${interval}`);
+    const response = await instance.get<ResponseType>(`asset-history?id=${id}&interval=${interval}`);
     return response.data;
   },
   async assetsMarketsById(id:string, limit = 10): Promise<ResponseType> {
-    const response = await instance.get<ResponseType>(`assets/${id}/markets?limit=${limit}`);
+    const response = await instance.get<ResponseType>(`asset-markets?id=${id}&limit=${limit}`);
     return response.data;
   },
 };
