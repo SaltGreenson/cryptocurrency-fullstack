@@ -12,8 +12,6 @@ export function setAssets(offset: number, limit: number)
     : ThunkAction<Promise<void>, RootState, unknown, ActionsTypes> {
     return async (dispatch: Dispatch<ActionsTypes | AppActionsType>) => {
         const response: ResponseType = await assetsApi.assets(offset, limit);
-        const t = await axios.get(`${keys.tRPC_CLIENT_URL}/assets?offset=0&limit=1`);
-        console.log(t)
         dispatch(actions.setAssets(response));
     };
 }
