@@ -3,6 +3,8 @@ import Chart from 'chart.js/auto';
 import {LinearScale, LineController, LineElement, PointElement, Title,} from 'chart.js';
 import classes from './ChartComponent.module.css';
 import {AssetsHistoryType} from '../../api/types-api';
+import {trpc} from "../utils/helpers/trpc";
+import LittlePreloader from "../common/LittlePreloader/LittlePreloader";
 
 export const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
   day: '2-digit',
@@ -30,6 +32,7 @@ const ChartComponent: React.FC<PropsTypes> = ({
   isDisplayY,
   borderColor = '#4fc180',
 }) => {
+
   useEffect(() => {
     Chart.register(LineController, LineElement, PointElement, LinearScale, Title);
 

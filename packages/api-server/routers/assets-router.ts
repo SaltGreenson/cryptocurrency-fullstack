@@ -129,7 +129,7 @@ export const assetsRouter = initializedTRPC.router({
         .query(async ({input}) => {
             const response = await instance.get(`assets/${input.id}/history`+
                 `?interval=${input.interval}` +
-                `?startEnd=${input.startEnd ?? ''}`);
+                `&startEnd=${input.startEnd ?? ''}`);
             return response.data;
         }),
     assetMarkets: publicProcedure

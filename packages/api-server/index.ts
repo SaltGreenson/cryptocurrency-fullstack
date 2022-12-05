@@ -17,6 +17,8 @@ app.use('/api', createOpenApiExpressMiddleware({router: appRouter}));
 app.use('/', swaggerUi.serve);
 app.get('/', swaggerUi.setup(openApiDocument));
 
+export type AppRouter = typeof appRouter;
+
 app.listen(keys.PORT, () => {
     console.log(`Server started on http://localhost:${keys.PORT}`);
 })

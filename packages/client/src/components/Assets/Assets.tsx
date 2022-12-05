@@ -33,7 +33,7 @@ export const Assets: React.FC = () => {
   const state = JSON.parse(
     localStorage.getItem(keys.localStorageName) as string
   );
-  const [favourites, setFavourites] = useState<Array<FavouriteType>>(
+  const [favourites] = useState<Array<FavouriteType>>(
     state || []
   );
 
@@ -42,7 +42,7 @@ export const Assets: React.FC = () => {
     {} as AssetsType
   );
   const [isAlreadyExistCoin, setIsAlreadyExistCoin] = useState<boolean>(false);
-  const [pageFromParams, setPageFromParams] = useState<number>(page || 1);
+  const [pageFromParams] = useState<number>(page || 1);
 
   const onClickHandler = (coin: AssetsType) => {
     setSelectedCoin(coin);

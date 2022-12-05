@@ -5,9 +5,13 @@
   "homepage": "https://saltgreenson.github.io/cryptocurrency",
   "dependencies": {
     "-": "^0.0.1",
+    "@tanstack/react-query": "^4.19.1",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "13.5.0",
+    "@trpc/client": "10.4.1",
+    "@trpc/react-query": "10.4.1",
+    "@trpc/server": "10.4.1",
     "@types/node": "16.11.58",
     "@types/react": "18.0.18",
     "@types/react-dom": "18.0.6",

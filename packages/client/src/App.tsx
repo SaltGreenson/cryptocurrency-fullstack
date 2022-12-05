@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Navigate, Route, Routes} from "react-router-dom";
 import classes from "./App.module.css";
@@ -10,6 +10,9 @@ import NotFoundPage from "./pages/NotFound/NotFound";
 import {getProfile} from "./selectors/profile-selectors";
 import {ProfileType} from "./redux/profileReducer/profileReducer";
 import {useActions} from "./components/utils/helpers/hooks";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {trpc} from "./components/utils/helpers/trpc";
+import {httpBatchLink} from "@trpc/client";
 const MainLazy = React.lazy(() => import("./pages/Main/Main"));
 const DescriptionLazy = React.lazy(
     () => import("./pages/Description/Description")
@@ -49,6 +52,17 @@ const StartApp: React.FC = () => {
   const {setAssetsTop3, setAssetsOffsets, setAssetsLimit, initializeApp} =
       useActions();
 
+  const [queryClient] = useState(() => new QueryClient());
+  const [trpcClient] = useState(() =>
+      trpc.createClient({
+        links: [
+          httpBatchLink({
+            url: 'http://localhost:8080/api/trpc',
+          }),
+        ],
+      }),
+  );
+
   useEffect(() => {
     const offset = 0;
     const limit = 50;
@@ -63,7 +77,11 @@ const StartApp: React.FC = () => {
     return <Preloader/>;
   }
 
-  return <App profile={profile}/>
+  return <trpc.Provider client={trpcClient} queryClient={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <App profile={profile}/>
+    </QueryClientProvider>
+  </trpc.Provider>
 
 };
 
