@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlockFlexStyles, FlexPropsTypes } from './block-styles';
+import {BlockContentStyles, BlockFlexStyles, ContentBlockTypes, FlexPropsTypes} from './styles/block-styles';
 
 type BlockPropsTypes = {
     children: React.FC | React.DetailedHTMLProps<any, any>
@@ -7,14 +7,21 @@ type BlockPropsTypes = {
 
 type BlockTypes = {
     Flex: React.FC<BlockPropsTypes & FlexPropsTypes>
+    Content: React.FC<BlockPropsTypes & ContentBlockTypes>
 }
 
-const Block:React.FC<BlockPropsTypes & FlexPropsTypes> & BlockTypes = ({ children }) => (
-  <div>
-    {children}
-  </div>
+const Block: React.FC<BlockPropsTypes> & BlockTypes = ({children}) => (
+    <div>
+        {children}
+    </div>
 );
 
-Block.Flex = ({ ...rest }) => <BlockFlexStyles {...rest} />;
+Block.Flex = ({children, ...rest}) => <BlockFlexStyles {...rest}>
+    {children}
+</BlockFlexStyles>
+
+Block.Content = ({children, ...rest}) => <BlockContentStyles {...rest}>
+    {children}
+</BlockContentStyles>
 
 export default Block;

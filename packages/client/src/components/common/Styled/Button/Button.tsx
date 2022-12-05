@@ -6,7 +6,7 @@ import {
   StyledSmallButtonTypes,
   StyledTransparentButton,
   StyledTransparentButtonPropsTypes,
-} from './button-styles';
+} from './styles/button-styles';
 
 export type ButtonPropsTypes = {
     children: React.FC | React.DetailedHTMLProps<any, any>,

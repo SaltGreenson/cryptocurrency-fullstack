@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import classNames from 'classnames';
-import { AssetsType } from '../../api/types-api';
-import classes from './CoinElement.module.css';
+import {Link} from 'react-router-dom';
+import {AssetsType} from '../../api/types-api';
 import Button from '../common/Styled/Button/Button';
-import { formatNumbersToPrettyStyle, formatNumberToPrice } from '../utils/helpers/helpers';
+import {formatNumbersToPrettyStyle, formatNumberToPrice} from '../utils/helpers/helpers';
+import {Table} from "../common/Styled/Table/Table";
+import Block from "../common/Styled/Block/Block";
+import {P} from "../common/Styled/Paragraph/Paragraph";
 
 type PropsTypes = {
     coin: AssetsType,
@@ -17,12 +18,14 @@ export const CoinElement: React.FC<PropsTypes> = ({
   alreadyInFavourite,
   onClickHandler,
 }) => (
-  <tr>
-    <td>
-      <p className={classes.number}>{coin.rank}</p>
-    </td>
-    <td>
-      <div className={classes.titleWrap}>
+  <Table.TR>
+
+    <Table.TD>
+      <P>{coin.rank}</P>
+    </Table.TD>
+
+    <Table.TD>
+        <Block.Flex align={"center"}>
 
         <Button.Transparent
           type="button"
@@ -33,28 +36,56 @@ export const CoinElement: React.FC<PropsTypes> = ({
         >
           &#9733;
         </Button.Transparent>
-        <Link to={`/:id=${coin.id}`} className={classes.title} data-cy="linkToDescription">{coin.name}</Link>
-        <Link to={`/:id=${coin.id}`} className={classes.symbol}>{coin.symbol}</Link>
-      </div>
-    </td>
-    <td>
-      <p className={classes.number}>{formatNumberToPrice(+coin.priceUsd)}</p>
-    </td>
-    <td>
-      <p className={classes.number}>{formatNumbersToPrettyStyle(+coin.changePercent24Hr)}</p>
-    </td>
-    <td>
-      <p className={classNames(classes.number, classes.marketCap)}>
+            <Block.Content
+                margin={"1em 0"}
+            >
+        <Link
+            to={`/:id=${coin.id}`}
+            data-cy="linkToDescription"
+        >
+            <P.Bold
+                cursor={'pointer'}
+                letterSpacing={'1px'}
+            >{coin.name}</P.Bold>
+        </Link>
+            </Block.Content>
+        <Link
+            to={`/:id=${coin.id}`}>
+
+            <P cursor={'pointer'}
+               color={"darkWhite"}
+               fontSize={'16px'}
+               margin={'0 0 0 0.6rem'}
+            >
+                {coin.symbol}
+            </P>
+        </Link>
+
+      </Block.Flex>
+    </Table.TD>
+    <Table.TD textAlign={"right"}>
+      <P>{formatNumberToPrice(+coin.priceUsd)}</P>
+    </Table.TD>
+
+    <Table.TD textAlign={"right"}>
+      <P>{formatNumbersToPrettyStyle(+coin.changePercent24Hr)}</P>
+    </Table.TD>
+
+    <Table.TD textAlign={"right"}>
+      <P color={'lightGrey'}>
         {formatNumbersToPrettyStyle(+coin.supply, 2, 15)}
         {' '}
         {coin.symbol}
-      </p>
-    </td>
-    <td>
-      <p className={classNames(classes.number, classes.marketCap)}>{formatNumberToPrice(+coin.marketCapUsd)}</p>
-    </td>
-    <td>
-      <p className={classes.number}>{formatNumberToPrice(+coin.volumeUsd24Hr)}</p>
-    </td>
-  </tr>
+      </P>
+    </Table.TD>
+
+    <Table.TD textAlign={"right"}>
+      <P color={'lightGrey'}>{formatNumberToPrice(+coin.marketCapUsd)}</P>
+    </Table.TD>
+
+    <Table.TD textAlign={"right"}>
+      <P>{formatNumberToPrice(+coin.volumeUsd24Hr)}</P>
+    </Table.TD>
+
+  </Table.TR>
 );

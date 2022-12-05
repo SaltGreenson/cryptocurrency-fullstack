@@ -17,17 +17,20 @@ export const theme = {
     red: '#ff0000',
     transparentRed: '#FF000019',
     green: '#4fc180',
+    darkWhite: '#afafaf',
     white: '#ffffff',
   },
   media: {
     phone: '(max-width: 780px)',
-    tablet: '(max- width: 1200px)',
+    tablet: '(max-width: 1200px)',
+    computer: '(min-width: 1201px)'
   },
   fonts: {
     sizes: {
       little: '12px',
       default: '14px',
-      medium: '20px',
+      medium: '16px',
+      moreThanMedium: '20px',
       large: '32px',
     },
     fonts: {

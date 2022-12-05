@@ -23,6 +23,9 @@ import {
   formatNumberToPrice,
 } from "../../components/utils/helpers/helpers";
 import { useActions } from "../../components/utils/helpers/hooks";
+import Block from "../../components/common/Styled/Block/Block";
+import {P} from "../../components/common/Styled/Paragraph/Paragraph";
+import {theme} from "../../global-styles";
 
 const Description: React.FC = (props) => {
   const { setAssetByID, setAssetsHistoryById } = useActions();
@@ -47,15 +50,28 @@ const Description: React.FC = (props) => {
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.heading}>
-        <div className={classes.titleWrap}>
-          <div className={classes.rankWrap}>
-            <p className={classes.rank}>RANK #{asset.rank}</p>
-          </div>
-          <p className={classes.name} data-cy="descriptionCoinName">
+    <Block.Content margin={'0 auto'}
+                   computerModeMaxWidth={'70%'}
+                   tabletModeMaxWidth={'95%'}
+    >
+      <Block.Flex
+          justify={'space-between'}
+          flexWrap={'wrap'}
+          direction={'row'}>
+        <Block.Flex justify={'center'}
+                    margin={'0 5rem 0 0'}>
+          <Block>
+            <P fontSize={'32px'}
+               margin={'0 2rem 0 0'}
+               color={theme.colors.darkGrey}>
+              RANK #{asset.rank}
+            </P>
+          </Block>
+          <P.Bold fontSize={'32px'}
+                  margin={'0 1rem 0 0'}
+                  data-cy="descriptionCoinName">
             {asset.name}
-          </p>
+          </P.Bold>
 
           <span className={classes.symbolWrap}>
             <p className={classes.symbol}>{asset.symbol}</p>
@@ -74,9 +90,9 @@ const Description: React.FC = (props) => {
           >
             &#9733;
           </p>
-        </div>
+        </Block.Flex>
 
-        <div className={classes.priceDescriptionContainer}>
+        <Block>
           <div className={classes.priceDescriptionWrap}>
             <p className={classes.priceDescription}>
               {asset.name} Price
@@ -109,7 +125,7 @@ const Description: React.FC = (props) => {
               </div>
             </div>
           </div>
-        </div>
+        </Block>
         {!assetHistory ? (
           <LittlePreloader />
         ) : (
@@ -122,7 +138,7 @@ const Description: React.FC = (props) => {
             />
           </div>
         )}
-      </div>
+      </Block.Flex>
       <div className={classes.descriptionContainer}>
         <div className={classes.descriptionWrap}>
           <div className={classes.descriptionElement}>
@@ -164,7 +180,7 @@ const Description: React.FC = (props) => {
           />
         }
       />
-    </div>
+    </Block.Content>
   );
 };
 

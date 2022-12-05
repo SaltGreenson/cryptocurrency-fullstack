@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputPropsTypes, InputStyled } from './input-styles';
+import { InputPropsTypes, InputStyled } from './styles/input-styles';
 import Block from '../Block/Block';
 import Button from '../Button/Button';
 

@@ -11,6 +11,8 @@ import { keys } from "../../keys";
 import { getProfile } from "../../selectors/profile-selectors";
 import ContainerPopUpCoinDescription from "../PopUpCoinDescription/ContainerPopUpCoinDescription";
 import { useActions } from "../utils/helpers/hooks";
+import {Table} from "../common/Styled/Table/Table";
+import Block from "../common/Styled/Block/Block";
 
 export const getValueFromParams = (params: string) => params.split("=")[1];
 
@@ -67,21 +69,26 @@ export const Assets: React.FC = () => {
   }, [pageFromParams]);
 
   return (
-    <div className={classes.container}>
-      <div className={classes.tableWrap}>
-        <table>
-          <thead className={classes.theadStyle}>
-            <tr className={classes.headerTable}>
-              <th>#</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>24h%</th>
-              <th>Circulating Supply</th>
-              <th>Market cap</th>
-              <th>Volume(24h)</th>
-            </tr>
-          </thead>
-          <tbody>
+
+    <Block.Content>
+      <Block.Content
+          tabletModeMaxWidth={"100%"}
+          computerModeMaxWidth={"1400px"}
+          align={'center'}
+      >
+        <Table>
+          <Table.Head>
+            <Table.TR>
+              <Table.TH textAlign={"left"}>#</Table.TH>
+              <Table.TH textAlign={"left"}>Name</Table.TH>
+              <Table.TH textAlign={"right"}>Price</Table.TH>
+              <Table.TH textAlign={"right"}>24h%</Table.TH>
+              <Table.TH textAlign={"right"}>Circulating Supply</Table.TH>
+              <Table.TH textAlign={"right"}>Market cap</Table.TH>
+              <Table.TH textAlign={"right"}>Volume(24h)</Table.TH>
+            </Table.TR>
+          </Table.Head>
+          <Table.Body>
             {assets.map((coin) => (
               <CoinElement
                 key={coin.id}
@@ -90,9 +97,9 @@ export const Assets: React.FC = () => {
                 onClickHandler={onClickHandler}
               />
             ))}
-          </tbody>
-        </table>
-      </div>
+          </Table.Body>
+        </Table>
+      </Block.Content>
 
       <PopUp active={isPopUpActive} setActive={setIsPopUpActive}>
         <ContainerPopUpCoinDescription
@@ -101,6 +108,6 @@ export const Assets: React.FC = () => {
           setIsPopUpActive={setIsPopUpActive}
         />
       </PopUp>
-    </div>
+    </Block.Content>
   );
 };
