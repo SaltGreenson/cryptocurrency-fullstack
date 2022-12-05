@@ -8,8 +8,9 @@ You need to add a `/packages/client/src/keys` folder containing the `index.ts` t
 type KeysTypes = {
     API: string,
     localStorageName: string
-}
-const keys: KeysTypes = {
+};
+
+export const keys: KeysTypes = {
   API: '00000000-0000-0000-0000-000000000000',
   localStorageName: 'storageName',
 };
